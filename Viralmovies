@@ -1,0 +1,114 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<script async="async" data-cfasync="false" src="https://coralcanarydepend.com/bd76ee75ada314f058f787267f730329/invoke.js"></script>
+<div id="container-bd76ee75ada314f058f787267f730329"></div>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@viralmovies_hd | Watch Now</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        /* Telegram Theme Variables */
+        :root {
+            --bg-color: var(--tg-theme-bg-color, #ffffff);
+            --text-color: var(--tg-theme-text-color, #222222);
+            --hint-color: var(--tg-theme-hint-color, #999999);
+            --link-color: var(--tg-theme-link-color, #248bcf);
+            --button-color: var(--tg-theme-button-color, #248bcf);
+            --button-text: var(--tg-theme-button-text-color, #ffffff);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 15px;
+        }
+
+        h2 { text-align: center; margin-bottom: 20px; }
+
+        /* Movie Grid Layout */
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .movie-card {
+            background: rgba(0,0,0,0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            text-align: center;
+            padding-bottom: 10px;
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .movie-title {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 8px 5px;
+        }
+
+        .watch-btn {
+            background-color: var(--button-color);
+            color: var(--button-text);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            width: 80%;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--hint-color);
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+
+    <h2>🎥 Trending Movies</h2>
+    <input type="text" class="search-bar" placeholder="Search movies...">
+
+    <div class="movie-grid">
+        <div class="movie-card">
+            <img src="https://via.placeholder.com/150x200" alt="Movie Name">
+            <div class="movie-title">Pushpa 2: The Rule</div>
+            <button class="watch-btn" onclick="openMovie('Pushpa 2')">Watch Now</button>
+        </div>
+
+        <div class="movie-card">
+            <img src="https://via.placeholder.com/150x200" alt="Movie Name">
+            <div class="movie-title">Singham Again</div>
+            <button class="watch-btn" onclick="openMovie('Singham')">Watch Now</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Telegram Web App
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Full screen open karega
+
+        function openMovie(name) {
+            tg.showPopup({
+                title: 'Play Movie',
+                message: 'Do you want to watch ' + name + ' on @viralmovies_hd?',
+                buttons: [{type: 'ok', text: 'Watch'}, {type: 'cancel'}]
+            });
+        }
+    </script>
+</body>
+<script src="https://coralcanarydepend.com/90/41/e8/9041e8df51c942f330f234cd08c1f417.js"></script>
+</html>
