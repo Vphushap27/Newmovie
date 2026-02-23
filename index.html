@@ -1,34 +1,46 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<script async="async" data-cfasync="false" src="https://coralcanarydepend.com/bd76ee75ada314f058f787267f730329/invoke.js"></script>
-<div id="container-bd76ee75ada314f058f787267f730329"></div>
+ <script src="https://coralcanarydepend.com/90/41/e8/9041e8df51c942f330f234cd08c1f417.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@viralmovies_hd | Watch Now</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        /* Telegram Theme Variables */
         :root {
             --bg-color: var(--tg-theme-bg-color, #ffffff);
             --text-color: var(--tg-theme-text-color, #222222);
             --hint-color: var(--tg-theme-hint-color, #999999);
-            --link-color: var(--tg-theme-link-color, #248bcf);
             --button-color: var(--tg-theme-button-color, #248bcf);
             --button-text: var(--tg-theme-button-text-color, #ffffff);
+            --card-bg: rgba(120, 120, 120, 0.1);
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 15px;
+            user-select: none;
         }
 
-        h2 { text-align: center; margin-bottom: 20px; }
+        h2 { text-align: center; margin: 10px 0 20px 0; font-size: 22px; }
 
-        /* Movie Grid Layout */
+        /* Search Bar */
+        .search-bar {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--hint-color);
+            background: var(--bg-color);
+            color: var(--text-color);
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        /* Movie Grid */
         .movie-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -36,79 +48,99 @@
         }
 
         .movie-card {
-            background: rgba(0,0,0,0.05);
-            border-radius: 12px;
+            background: var(--card-bg);
+            border-radius: 15px;
             overflow: hidden;
             text-align: center;
-            padding-bottom: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-bottom: 12px;
         }
 
         .movie-card img {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
+            border-bottom: 2px solid var(--button-color);
         }
 
         .movie-title {
             font-size: 14px;
             font-weight: bold;
-            padding: 8px 5px;
+            padding: 10px 5px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .watch-btn {
             background-color: var(--button-color);
             color: var(--button-text);
             border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 12px;
-            width: 80%;
+            font-size: 13px;
+            font-weight: bold;
+            width: 85%;
+            margin: 0 auto;
         }
 
-        .search-bar {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            border: 1px solid var(--hint-color);
-            background: var(--bg-color);
-            color: var(--text-color);
+        .watch-btn:active {
+            transform: scale(0.95);
+            opacity: 0.9;
         }
     </style>
 </head>
 <body>
 
-    <h2>🎥 Trending Movies</h2>
-    <input type="text" class="search-bar" placeholder="Search movies...">
+    <h2 id="welcome-msg">🎥 Trending Movies</h2>
+    <input type="text" class="search-bar" placeholder="Search movies in @viralmovies_hd...">
 
     <div class="movie-grid">
         <div class="movie-card">
-            <img src="https://via.placeholder.com/150x200" alt="Movie Name">
+            <img src="https://m.media-amazon.com/images/M/MV5BNGZlNjdlZmMtYTg0MC00YjVjLWEyMGYtYzM1YzY3ZDkzYjIxXkEyXkFqcGc@._V1_.jpg" alt="Pushpa 2">
             <div class="movie-title">Pushpa 2: The Rule</div>
-            <button class="watch-btn" onclick="openMovie('Pushpa 2')">Watch Now</button>
+            <button class="watch-btn" onclick="openMovie('Pushpa 2', 'https://t.me/viralmovies_hd')">Watch Now</button>
         </div>
 
         <div class="movie-card">
-            <img src="https://via.placeholder.com/150x200" alt="Movie Name">
+            <img src="https://m.media-amazon.com/images/M/MV5BMjI0N2M0N2UtNmY4Yy00ZGRkLTliYTctMDI0Y2EyZGU2ZWY2XkEyXkFqcGc@._V1_.jpg" alt="Singham Again">
             <div class="movie-title">Singham Again</div>
-            <button class="watch-btn" onclick="openMovie('Singham')">Watch Now</button>
+            <button class="watch-btn" onclick="openMovie('Singham Again', 'https://t.me/viralmovies_hd')">Watch Now</button>
         </div>
     </div>
 
     <script>
-        // Initialize Telegram Web App
         const tg = window.Telegram.WebApp;
-        tg.expand(); // Full screen open karega
+        tg.expand(); // Make app full screen
+        tg.ready();
 
-        function openMovie(name) {
+        // Personalize welcome message with User Name
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            document.getElementById('welcome-msg').innerText = `Hello ${tg.initDataUnsafe.user.first_name}, Watch Now!`;
+        }
+
+        function openMovie(name, url) {
             tg.showPopup({
                 title: 'Play Movie',
-                message: 'Do you want to watch ' + name + ' on @viralmovies_hd?',
-                buttons: [{type: 'ok', text: 'Watch'}, {type: 'cancel'}]
+                message: `Do you want to open ${name} link?`,
+                buttons: [
+                    {id: 'watch', type: 'default', text: 'Watch Now'},
+                    {type: 'cancel', text: 'Close'}
+                ]
+            }, function(buttonId) {
+                if (buttonId === 'watch') {
+                    tg.openLink(url); // This will open your channel or movie link
+                }
             });
         }
     </script>
 </body>
-<script src="https://coralcanarydepend.com/90/41/e8/9041e8df51c942f330f234cd08c1f417.js"></script>
+<script async="async" data-cfasync="false" src="https://coralcanarydepend.com/bd76ee75ada314f058f787267f730329/invoke.js"></script>
+<div id="container-bd76ee75ada314f058f787267f730329"></div>
+
 </html>
