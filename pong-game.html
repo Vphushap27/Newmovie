@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+            margin: 0;
+        }
+        canvas {
+            border: 2px solid white;
+        }
+        h1 {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pong Game</h1>
+    <canvas id="pong" width="800" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById('pong');
+        const context = canvas.getContext('2d');
+
+        const ballRadius = 10;
+        let x = canvas.width / 2;
+        let y = canvas.height / 2;
+        let dx = 2;
+        let dy = -2;
+        const paddleHeight = 100;
+        const paddleWidth = 10;
+        let playerPaddleY = (canvas.height - paddleHeight) / 2;
+        let computerPaddleY = (canvas.height - paddleHeight) / 2;
+        let playerScore = 0;
+        let computerScore = 0;
+
+        function drawBall() {
+            context.beginPath();
+            context.arc(x, y, ballRadius, 0, Math.PI * 2);
+            context.fillStyle = 'white';
+            context.fill();
+            context.closePath();
+        }
+
+        function drawPaddles() {
+            // Player Paddle
+            context.fillStyle = 'white';
+            context.fillRect(0, playerPaddleY, paddleWidth, paddleHeight);
+            // Computer Paddle
+            context.fillRect(canvas.width - paddleWidth, computerPaddleY, paddleWidth, paddleHeight);
+        }
+
+        function drawScore() {
+            context.font = '16px Arial';
+            context.fillStyle = 'white';
+            context.fillText('Player: ' + playerScore, 8, 20);
+            context.fillText('Computer: ' + computerScore, canvas.width - 100, 20);
+        }
+
+        function update() {
+            x += dx;
+            y += dy;
+
+            // Ball collision with top and bottom
+            if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+                dy = -dy;
+            }
+
+            // Ball collision with paddles
+            if (x + dx < paddleWidth && y > playerPaddleY && y < playerPaddleY + paddleHeight) {
+                dx = -dx;
+            } else if (x + dx > canvas.width - paddleWidth && y > computerPaddleY && y < computerPaddleY + paddleHeight) {
+                dx = -dx;
+            }
+
+            // Scoring
+            if (x + dx < 0) {
+                computerScore++;
+                resetBall();
+            } else if (x + dx > canvas.width) {
+                playerScore++;
+                resetBall();
+            }
+
+            // Move the computer paddle
+            if (y > computerPaddleY + paddleHeight / 2) {
+                computerPaddleY += 4;
+            } else {
+                computerPaddleY -= 4;
+            }
+
+            // Ensure the computer paddle stays in bounds
+            computerPaddleY = Math.max(Math.min(computerPaddleY, canvas.height - paddleHeight), 0);
+        }
+
+        function resetBall() {
+            x = canvas.width / 2;
+            y = canvas.height / 2;
+            dx = -dx;
+            dy = 2 * (Math.random() < 0.5 ? 1 : -1);
+        }
+
+        function gameLoop() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            drawBall();
+            drawPaddles();
+            drawScore();
+            update();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Control the player paddle
+        document.addEventListener('mousemove', function(event) {
+            const relativeY = event.clientY - canvas.getBoundingClientRect().top;
+            playerPaddleY = relativeY - paddleHeight / 2;
+            playerPaddleY = Math.max(Math.min(playerPaddleY, canvas.height - paddleHeight), 0);
+        });
+
+        document.addEventListener('keydown', function(event) {
+            switch (event.key) {
+                case 'ArrowUp':
+                    playerPaddleY -= 20;
+                    break;
+                case 'ArrowDown':
+                    playerPaddleY += 20;
+                    break;
+            }
+            playerPaddleY = Math.max(Math.min(playerPaddleY, canvas.height - paddleHeight), 0);
+        });
+
+        gameLoop();
+    </script>
+</body>
+</html>
